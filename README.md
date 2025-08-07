@@ -3,6 +3,12 @@ Simple Web Control Of a ROS2 Robot, using ROS2 Rosbridge
 
 Note this is a simple web control using push buttons to make small robot movements, forwards/backwards and left/right. It is probably too basic to be practically useful; but it does demonstrate how to get a web browser to interact with ROS2 using ROS2 Rosbridge.
 
+This package launches ROS2 Rosbridge and also a Python http server (to serve up a Javascript program to the browser). This Javascript program instructs Rosbridge to publish TwistStamped messages on topic /cmd_vel when one of the direction buttons is pressed.
+
+# Tested
+
+Tested on ROS2 Jazzy.
+
 # Launch
 
 To use:
