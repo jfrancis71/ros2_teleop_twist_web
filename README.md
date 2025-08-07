@@ -5,9 +5,9 @@ Note this is a simple web control using push buttons to make small robot movemen
 
 # Launch
 
-ros2 launch teleop_twist_web teleop_twist_web_launch.py
-
 To use:
+
+```ros2 launch teleop_twist_web teleop_twist_web_launch.py```
 
 on web browser:
     http://192.168.1.178:8000/
@@ -15,10 +15,12 @@ on web browser:
 replace the above IP address with the address of the server where you launch teleop_twist_web.
 
 # References
+
 ROS Bridge server: https://github.com/RobotWebTools/rosbridge_suite
+
 ROSLibJS: https://github.com/RobotWebTools/roslibjs
-Youtube: https://www.youtube.com/watch?v=Imb6kCqkCpA&t=191s
-ROS2 Web Interface | ros2 tutorial | robotics engineering | robot operating system
-Aryan Jagushte
-Accessed 05/08/2025
+
+Aryan Jagushte, ROS2 Web Interface, YouTube. 01/12/2024. https://www.youtube.com/watch?v=Imb6kCqkCpA
+
+
 
