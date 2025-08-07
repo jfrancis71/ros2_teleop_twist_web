@@ -1,0 +1,50 @@
+<html>
+<head><title>Simple ROS2 Robot Web Controller</title></head>
+<H1>Simple ROS2 Robot Web Controller</H1>
+<button onclick="move(0.05, 0.0)">Forward</button>
+<button onclick="move(0.0, 0.3)">Left</button>
+<button onclick="move(0.0, -0.3)">Right</button>
+<button onclick="move(-0.05, 0.0)">Back</button>
+</html>
+
+<script src="https://unpkg.com/eventemitter3@latest/dist/eventemitter3.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/roslib@1.0.1/build/roslib.min.js"></script>
+
+<script>
+var ros = new ROSLIB.Ros();
+console.log("Attempting to bind to " + location.hostname);
+ros.connect('ws://' + location.hostname + ':9090');
+
+// Find out exactly when we made a connection.
+ros.on('connection', function() {
+  console.log('Connection made!');
+})
+
+function move( x, z)
+{
+  var cmdVel = new ROSLIB.Topic({
+    ros : ros,
+    name : '/cmd_vel',
+    messageType : 'geometry_msgs/TwistStamped'
+  });
+
+  var twist = {
+    linear : {
+      x : x,
+      y : 0.0,
+      z : 0.0
+    },
+    angular : {
+      x : 0.0,
+      y : 0.0,
+      z : z
+    }
+  };
+  var twist_stamped = {
+    twist : twist
+  };
+
+  // And finally, publish.
+  cmdVel.publish(twist_stamped);
+}
+</script>
