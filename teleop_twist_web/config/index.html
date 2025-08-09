@@ -1,16 +1,64 @@
 <html>
 <head><title>Simple ROS2 Robot Web Controller</title></head>
 <H1>Simple ROS2 Robot Web Controller</H1>
-<button onclick="move(0.05, 0.0)">Forward</button>
-<button onclick="move(0.0, 0.3)">Left</button>
-<button onclick="move(0.0, -0.3)">Right</button>
-<button onclick="move(-0.05, 0.0)">Back</button>
+<canvas id="mycanvas" width=300 height=300></canvas>
 </html>
 
 <script src="https://unpkg.com/eventemitter3@latest/dist/eventemitter3.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/roslib@1.0.1/build/roslib.min.js"></script>
 
 <script>
+
+const mycanvas = document.getElementById("mycanvas");
+const ctx = mycanvas.getContext("2d");
+mycanvas.addEventListener( 'touchstart', onTouchStart, false );
+mycanvas.addEventListener( 'touchmove', onTouchMove, false );
+mycanvas.addEventListener( 'touchend', onTouchEnd, false );
+
+twist_x = 0;
+twist_z = 0;
+
+width = 200;
+height = 200;
+
+function onTouchStart(e) {
+  let canvasRect = mycanvas.getBoundingClientRect();
+  left = e.changedTouches[0].clientX - canvasRect.left;
+  tops = e.changedTouches[0].clientY - canvasRect.top;
+  twist_cmd(left, tops);
+}
+
+function onTouchMove(e) {
+  let canvasRect = mycanvas.getBoundingClientRect();
+  left = e.changedTouches[0].clientX - canvasRect.left;
+  tops = e.changedTouches[0].clientY - canvasRect.top;
+  twist_cmd(left, tops);
+  e.preventDefault();
+}
+
+function onTouchEnd(e) {
+  twist_cmd(width/2, height/2);
+}
+
+function twist_cmd(x, y) {
+  draw_box(x, y);
+  twist_x = -(y-height/2)/(height*5);
+  twist_z = -(x-width/2)/(.5*width);
+}
+
+function draw_box(x, y) {
+  ctx.fillStyle = "blue";
+  ctx.fillRect( 0, 0, width, height);
+  ctx.fillStyle = "red";
+  ctx.fillRect( x-5, y-5, 10, 10);
+  ctx.fillStyle = "black";
+  ctx.moveTo(0, height/2);
+  ctx.lineTo(width, height/2);
+  ctx.moveTo(width/2, 0);
+  ctx.lineTo(width/2, height);
+  ctx.stroke();
+}
+
 var ros = new ROSLIB.Ros();
 console.log("Attempting to bind to " + location.hostname);
 ros.connect('ws://' + location.hostname + ':9090');
@@ -47,4 +95,11 @@ function move( x, z)
   // And finally, publish.
   cmdVel.publish(twist_stamped);
 }
+
+function poll() {
+  move(twist_x, twist_z);
+}
+
+setInterval(poll, 100);
+twist_cmd(height/2, width/2);
 </script>
