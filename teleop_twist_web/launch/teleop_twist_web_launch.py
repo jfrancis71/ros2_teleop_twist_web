@@ -1,12 +1,19 @@
 from launch import LaunchDescription
-from launch.substitutions import Command, PathJoinSubstitution
+from launch.substitutions import Command, PathJoinSubstitution, LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 from launch.actions import DeclareLaunchArgument, ExecuteProcess, IncludeLaunchDescription
+from launch.conditions import IfCondition
 
 
 def generate_launch_description():
+
+    camera_launch_arg = DeclareLaunchArgument(
+        'camera',
+        description='Launch camera node.',
+        default_value='false'
+    )
 
     webserver_folder = PathJoinSubstitution(
             [FindPackageShare("teleop_twist_web"), "config"])
@@ -27,10 +34,24 @@ def generate_launch_description():
         ]],
         shell=True
     )
+    camera_node = Node(
+        package='image_tools',
+        executable='cam2image',
+        parameters=[{"frequency": 10.0}],
+        condition=IfCondition(LaunchConfiguration('camera'))
+    )
+    web_video_server_node = Node(
+        package='web_video_server',
+        executable='web_video_server',
+        condition=IfCondition(LaunchConfiguration('camera'))
+    )
 
     nodes = [
+        camera_launch_arg,
         rosbridge_launch,
-        webserver_node
+        webserver_node,
+        camera_node,
+        web_video_server_node
     ]
 
     return LaunchDescription(nodes)

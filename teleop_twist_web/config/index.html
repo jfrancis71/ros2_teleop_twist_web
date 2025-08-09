@@ -102,4 +102,6 @@ function poll() {
 
 setInterval(poll, 100);
 twist_cmd(height/2, width/2);
+
+document.write("<img src=\"http://" + location.hostname + ":8080/stream?topic=/image\">");
 </script>
