@@ -38,6 +38,7 @@ def generate_launch_description():
         package='image_tools',
         executable='cam2image',
         parameters=[{"frequency": 10.0}],
+        remappings=[('/image', '/web_video_server/image')],
         condition=IfCondition(LaunchConfiguration('camera'))
     )
     web_video_server_node = Node(
