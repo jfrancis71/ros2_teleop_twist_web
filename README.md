@@ -34,4 +34,8 @@ ROSLibJS: https://github.com/RobotWebTools/roslibjs
 Aryan Jagushte, ROS2 Web Interface, YouTube. 01/12/2024. https://www.youtube.com/watch?v=Imb6kCqkCpA
 
 
+Following contains useful example on how to use touch displays in a browser:
+https://stackoverflow.com/questions/58337243/canvas-touch-event-js
 
+General discussion on touch control:
+https://seblee.me/2011/04/multi-touch-game-controller-in-javascripthtml5-for-ipad/
