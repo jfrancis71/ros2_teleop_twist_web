@@ -1,19 +1,24 @@
 # ros2_teleop_twist_web
-Simple Web Control Of a ROS2 Robot, using ROS2 Rosbridge
+Basic Web Control Of a ROS2 Robot, using ROS2 Rosbridge.
 
-Note this is a simple web control using push buttons to make small robot movements, forwards/backwards and left/right. It is probably too basic to be practically useful; but it does demonstrate how to get a web browser to interact with ROS2 using ROS2 Rosbridge.
+This package launches ROS2 Rosbridge and also a Python http server (to serve up a Javascript program to the browser). The Javascript creates a virtual joystick to move the robot. On a touch screen drag the red dot up/down for forwards backwards anf left/right to turn.
+These actions instruct Rosbridge to publish TwistStamped messages on topic /cmd_vel.
 
-This package launches ROS2 Rosbridge and also a Python http server (to serve up a Javascript program to the browser). This Javascript program instructs Rosbridge to publish TwistStamped messages on topic /cmd_vel when one of the direction buttons is pressed.
+Additionally has a camera option which if set to true launches the web video server, cam2image with topic set to /web_video_server/image, and this image will be displayed live image in the browser.
+
+This is currently for touch devices only.
 
 # Tested
 
-Tested on ROS2 Jazzy.
+teleop_twist_web: Raspberry Pi 3B+, Ubuntu 22.04, ROS2 Jazzy (RoboStack).
+
+Browser: Safari iPAD 15.6.1 and Safari iPhone SE 18.6
 
 # Launch
 
 To use:
 
-```ros2 launch teleop_twist_web teleop_twist_web_launch.py```
+```ros2 launch teleop_twist_web teleop_twist_web_launch.py camera:=true```
 
 on web browser:
     http://192.168.1.178:8000/
