@@ -4,7 +4,7 @@ Basic Web Control Of a ROS2 Robot, using ROS2 Rosbridge.
 This package launches ROS2 Rosbridge and also a Python http server (to serve up a Javascript program to the browser). The Javascript creates a virtual joystick to move the robot. On a touch screen drag the red dot up/down for forwards backwards anf left/right to turn.
 These actions instruct Rosbridge to publish TwistStamped messages on topic /cmd_vel.
 
-Additionally has a camera option which if set to true launches the web video server, cam2image with topic set to /web_video_server/image, and this image will be displayed live image in the browser.
+Additionally has a camera option which if set to true launches the web video server, cam2image with topic set to /web_video_server/image, and this image will be displayed live in the browser.
 
 This is currently for touch devices only.
 
