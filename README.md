@@ -8,11 +8,17 @@ Additionally has a camera option which if set to true launches the web video ser
 
 This is currently for touch devices only.
 
+
 # Tested
 
 teleop_twist_web: Raspberry Pi 3B+, Ubuntu 22.04, ROS2 Jazzy (RoboStack).
 
 Browser: Safari iPAD 15.6.1 and Safari iPhone SE 18.6
+
+
+# Installation
+
+Too come...
 
 # Launch
 
@@ -26,6 +32,11 @@ on web browser:
 replace the above IP address with the address of the server where you launch teleop_twist_web.
 
 If you do not have a camera attached, leave off the camera option (it is false by default).
+
+
+Seperately you will will to configure your robot to respond to ROS2 TwistStamped type messages on topic /cmd_vel. This will be specific to your setup so I do not cover it here. But for example on my robot Thomas it is:
+
+```ros2 launch thomas brickpi3_motors_launch.py```
 
 
 # References
