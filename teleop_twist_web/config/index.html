@@ -1,7 +1,7 @@
 <html>
 <head><title>Simple ROS2 Robot Web Controller</title></head>
 <H1>Simple ROS2 Robot Web Controller</H1>
-<canvas id="mycanvas" width=300 height=300></canvas>
+<canvas id="canvas" width=300 height=300></canvas>
 </html>
 
 <script src="https://unpkg.com/eventemitter3@latest/dist/eventemitter3.umd.min.js"></script>
@@ -9,11 +9,11 @@
 
 <script>
 
-const mycanvas = document.getElementById("mycanvas");
-const ctx = mycanvas.getContext("2d");
-mycanvas.addEventListener( 'touchstart', onTouchStart, false );
-mycanvas.addEventListener( 'touchmove', onTouchMove, false );
-mycanvas.addEventListener( 'touchend', onTouchEnd, false );
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+canvas.addEventListener( 'touchstart', onTouchStart, false );
+canvas.addEventListener( 'touchmove', onTouchMove, false );
+canvas.addEventListener( 'touchend', onTouchEnd, false );
 
 twist_x = 0;
 twist_z = 0;
@@ -22,14 +22,14 @@ width = 200;
 height = 200;
 
 function onTouchStart(e) {
-  let canvasRect = mycanvas.getBoundingClientRect();
+  let canvasRect = canvas.getBoundingClientRect();
   left = e.changedTouches[0].clientX - canvasRect.left;
   tops = e.changedTouches[0].clientY - canvasRect.top;
   twist_cmd(left, tops);
 }
 
 function onTouchMove(e) {
-  let canvasRect = mycanvas.getBoundingClientRect();
+  let canvasRect = canvas.getBoundingClientRect();
   left = e.changedTouches[0].clientX - canvasRect.left;
   tops = e.changedTouches[0].clientY - canvasRect.top;
   twist_cmd(left, tops);
