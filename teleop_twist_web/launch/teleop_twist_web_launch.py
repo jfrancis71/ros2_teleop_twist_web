@@ -15,6 +15,12 @@ def generate_launch_description():
         default_value='false'
     )
 
+    robot_launch_arg = DeclareLaunchArgument(
+        'ip_address',
+        description='IP Address',
+        default_value='unknown'
+    )
+
     webserver_folder = PathJoinSubstitution(
             [FindPackageShare("teleop_twist_web"), "config"])
 
@@ -29,8 +35,8 @@ def generate_launch_description():
     )
     webserver_node = ExecuteProcess(
         cmd=[[
-            'python -m http.server 8000',
-            ' -d ', webserver_folder
+            'python -m http.server 8000 --bind ::',
+            ' -d ', webserver_folder,
         ]],
         shell=True
     )
@@ -44,6 +50,7 @@ def generate_launch_description():
     web_video_server_node = Node(
         package='web_video_server',
         executable='web_video_server',
+        parameters=[{"address": LaunchConfiguration('ip_address')}],
         condition=IfCondition(LaunchConfiguration('camera'))
     )
 
